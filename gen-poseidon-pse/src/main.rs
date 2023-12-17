@@ -9,6 +9,7 @@ use primitive_types::U256;
 const WIDTH: usize = 5;
 
 fn main() {
+
     let args: Vec<String> = env::args().skip(1).collect();
     let inputs: Vec<Fr> = args.iter().map(|n| hex_to_field(n)).collect();
 
@@ -35,11 +36,7 @@ fn main() {
         panic!("hash_result_num > difficulty");
     }
 
-    println!("diff:{:?}", difficulty.sub(hash_result_num));
-    // println!("hash_result: {:?}", hash_result);
-    // println!("hash_result_num: {:?}", hash_result_num);
-    // println!("difficulty: {:?}", difficulty);
-    // println!("diff: {:?}", difficulty.sub(hash_result_num));
+    println!("diff:{:?}, difficulty:{:?}", difficulty.sub(hash_result_num), difficulty);
 }
 
 /// Returns congruent field element for the given hex string.
