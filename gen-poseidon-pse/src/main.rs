@@ -10,11 +10,9 @@ const WIDTH: usize = 5;
 
 fn main() {
 
-    let args: Vec<String> = env::args().skip(1).collect();
+    let difficulty_shift = env::args().nth(1).unwrap().parse::<i32>().unwrap();
+    let args: Vec<String> = env::args().skip(2).collect();
     let inputs: Vec<Fr> = args.iter().map(|n| hex_to_field(n)).collect();
-
-    // TODO add difficulty
-
 
     // let inputs: Vec<Fr> = [
     //     "0x84426c1493c469f553446efdafb84ec9fd54aeed6d448e308e22434cb8d5ff4b",
@@ -27,7 +25,6 @@ fn main() {
     native_poseidon_sponge.update(&inputs);
     let hash_result = native_poseidon_sponge.squeeze();
 
-    let difficulty_shift = 2;
     let difficulty = (!U256::from(0)).shr(difficulty_shift);
 
     let hash_result_num = U256::from_little_endian(&hash_result.to_repr()[..]);
